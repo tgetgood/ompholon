@@ -6,3 +6,70 @@ less. navel of my fixation on Koestler's approach to a theory.
 Every time I iterate on this thought experiment, I start de novo. Even a new
 name. I think it helps prevent getting stuck in ruts that work, but it's
 definitely not efficient.
+
+* Overview
+
+	The central idea is to separate computation from coordination as in Linda
+	among others. Unlike in linda, I don't think that the coordination language
+	can or should be totally separate from the computational language. Value based
+	programming — that is programming with immutable data — allows message passing
+	without serialisation to strings[fn:1], and prevents all of the complexity of tuple
+	spaces around ownership and consumption of messages.
+
+	I don't think the computational language needs to be strongly restricted
+	beyond the immutable datastructures which could in principle serve as a
+	protocol. That needs thought. For now, the computational language is a subset
+	of clojure.
+
+** The Equine Phoenix
+
+	 Side effects: the origin of physical computation and the bane of mathematical
+	 models of computation. A paradox so deep it's mostly invisible. There's no
+	 clearer sign of fertile ground for a new breakthrough.
+
+	 People are fond of pointing out that you can't implement IO in Haskell. But
+	 then if Haskell is isomorphic to the typed lambda calculus and Church and
+	 Turing weren't wrong, then does that mean that practical computers like the
+	 one I'm typing this on are something strictly more than Turing machines? A
+	 fascinating thought with very practical implications.
+
+** Theory of Computation
+
+	 Every language embodies a theory of computation, so let's be upfront about
+	 it.
+
+	 A computation modeled in ompholon is a graph where the nodes are pure
+	 (polymorphic) functions and the edges are channels of communication. The
+	 topology of the graph determines the coordination of pure functions.
+
+	 One way to view this is as an information processing system. The edges of the
+	 graph are signals, that is each edge will pass a series of messages over
+	 time, where a message is a (any) value.
+
+	 The nodes of the graph then are signal transducers. Functions that receive
+	 messages from some number of signals and emit a new signal of their
+	 own.
+
+	 Signal transducers (nodes) have no knowledge or control of which messages
+	 they receive, nor who receives the messages they emit. They simply receive a
+	 message and emit zero or more messages in response (optionally updating an
+	 internal state in the process).
+
+	 Signals can come into the system from the outside and leave into the
+	 unknown. That allows us to perform any of the side effects required for a
+	 real and useful system on the edges (literally in this case). The core of the
+	 network, both signals and trasducers, can be pure in a way that isn't
+	 practical normally.
+
+	 I don't want the problem of IO and Haskell. Side effects are necessary and
+	 they aren't dirty things to sweep under the carpet. There needs to be a place
+	 for them that is first class. I think the way to accomplish that is to adopt
+	 an open system hypothesis that no computation ever occurs in a vacuum; there
+	 is no main function, and programs don't halt. They simply act and react in
+	 their own ways to messages both internal and external to themselves.
+
+	 I need to work on expressing that clearly.
+
+* Footnotes
+
+[fn:1] The reason message passing is typically string based is just because strings are often the only immutable datastructure available in the core language.
